@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon"  href="druppiezonder.png">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" integrity="sha512-24XP4a9KVoIinPFUbcnjIjAjtS59PUoxQj3GNVpWc86bCqPuy3YxAcxJrxFCxXe4GHtAumCbO2Ze2bddtuxaRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <title> druppie | Regionaal </title>
+        <script type="text/javascript">
+            const locaties = {
+                'leeuwarden': 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=53.20139&lng=5.80859&overname=2&zoom=8&naam=leeuwarden&size=2b&voor=1',
+                'groningen': 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=53.21917&lng=6.56667&overname=2&zoom=8&naam=groningen&size=2b&voor=1',
+                'beilen' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.86333&lng=6.51389&overname=2&zoom=8&naam=beile&size=2b&voor=0',
+                'utrecht' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.09083&lng=5.12222&overname=2&zoom=8&naam=utrecht&size=2b&voor=0',
+                'hellendoorn' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.38833&lng=6.45139&overname=2&zoom=8&naam=hellendoorn&size=2b&voor=0',
+                'arnhem' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.98&lng=5.91111&overname=2&zoom=8&naam=arnhem&size=2b&voor=0',
+                'roermond' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.19417&lng=5.9875&overname=2&zoom=8&naam=roermond&size=2b&voor=0',
+                'tilburg' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.55551&lng=5.0913&overname=2&zoom=8&naam=tilburg&size=2b&voor=0',
+                'goes' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.50417&lng=3.88889&overname=2&zoom=8&naam=goes&size=2b&voor=0',
+                'rotterdam' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.9225&lng=4.47917&overname=2&zoom=8&naam=rotterdam&size=2b&voor=0',
+                'lelystad' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.50833&lng=5.475&overname=2&zoom=8&naam=lelystad&size=2b&voor=0',
+                'alkmaar' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.63167&lng=4.74861&overname=2&zoom=8&naam=alkmaar&size=2b&voor=0',
+                }
+                 const locatiesbe = {
+                'malle' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.29917&lng=4.7109&overname=2&zoom=8&naam=malle&size=2b&voor=0',
+                'frameries' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.40578&lng=3.89603&overname=2&zoom=8&naam=frameries&size=2b&voor=0',
+                'genk' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.965&lng=5.50082&overname=2&zoom=8&naam=genk&size=2b&voor=0',
+                'trooz' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.57026&lng=5.69521&overname=2&zoom=8&naam=trooz&size=2b&voor=0',
+                'saint-hubert' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.02668&lng=5.37401&overname=2&zoom=8&naam=saint-hubert&size=2b&voor=0',
+                'dinant' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.25807&lng=4.91166&overname=2&zoom=8&naam=dinant&size=2b&voor=0',
+                'gent' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.05&lng=3.71667&overname=2&zoom=8&naam=gent&size=2b&voor=0',
+                'rotselaar' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.95302&lng=4.71665&overname=2&zoom=8&naam=rotselaar&size=2b&voor=0',
+                'ottignies' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.66535&lng=4.56679&overname=2&zoom=8&naam=ottignies&size=2b&voor=0',
+                'roeselare' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.94653&lng=3.12269&overname=2&zoom=8&naam=roeselare&size=2b&voor=0'
+                }
+
+            const locatiesaankomendnl = {
+                'alkmaaraank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.63167&lng=4.74861&overname=2&zoom=8&naam=alkmaar&size=2b&voor=1',
+                'beilenaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.86333&lng=6.51389&overname=2&zoom=8&naam=beilen&size=2b&voor=1',
+                'lelystadaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.50833&lng=5.475&overname=2&zoom=8&naam=lelystad&size=2b&voor=1',
+                'leeuwardenaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=53.20139&lng=5.80859&overname=2&zoom=8&naam=leeuwarden&size=2b&voor=1',
+                'groningenaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=53.21917&lng=6.56667&overname=2&zoom=8&naam=groningen&size=2b&voor=1',
+                'roermondaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.19417&lng=5.9875&overname=2&zoom=8&naam=roermond&size=2b&voor=1',
+                'tilburgaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.55551&lng=5.0913&overname=2&zoom=8&naam=tilburg&size=2b&voor=1',
+                'arnhemaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.98&lng=5.91111&overname=2&zoom=8&naam=arnhem&size=2b&voor=1',
+                'hellendoornaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.38833&lng=6.45139&overname=2&zoom=8&naam=hellendoorn&size=2b&voor=1',
+                'utrechtaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.09083&lng=5.12222&overname=2&zoom=8&naam=utrecht&size=2b&voor=1',
+                'goesaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.50417&lng=3.88889&overname=2&zoom=8&naam=goes&size=2b&voor=1',
+                'rotterdamaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.9225&lng=4.47917&overname=2&zoom=8&naam=rotterdam&size=2b&voor=1'
+                }
+
+            const locatiesaankomendbe = {
+                'malleaank': 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.29917&lng=4.7109&overname=2&zoom=8&naam=malle&size=2b&voor=1',
+                'frameriesaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.40578&lng=3.89603&overname=2&zoom=8&naam=frameries&size=2b&voor=1',
+                'genkaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.965&lng=5.50082&overname=2&zoom=8&naam=genk&size=2b&voor=1',
+                'troozaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.57026&lng=5.69521&overname=2&zoom=8&naam=trooz&size=2b&voor=1',
+                'saint-hubertaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.02668&lng=5.37401&overname=2&zoom=8&naam=saint-hubert&size=2b&voor=1',
+                'dinantaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.25807&lng=4.91166&overname=2&zoom=8&naam=dinant&size=2b&voor=1',
+                'gentaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.05&lng=3.71667&overname=2&zoom=8&naam=gent&size=2b&voor=1',
+                'rotselaaraank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.95302&lng=4.71665&overname=2&zoom=8&naam=rotselaar&size=2b&voor=1',
+                'ottigniesaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.66535&lng=4.56679&overname=2&zoom=8&naam=ottignies&size=2b&voor=1',
+                'roeselareaank' : 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.94653&lng=3.12269&overname=2&zoom=8&naam=roeselare&size=2b&voor=1'
+                }
+
+            fetch('https://data.buienradar.nl/2.0/feed/json')
+            .then(function(response) {
+                return response.json();
+            }).then(function(jsonData) {
+                //nl//
+                const provinceOptions = document.querySelector('#weer-provincie');
+                const iframe = document.querySelector('#weather-map');
+
+                provinceOptions.addEventListener('input', function() {
+                    let url = locaties[provinceOptions.value];
+                    console.log(url);
+                    iframe.src = url;
+                })
+                //be//
+                const provincebeOptions = document.querySelector('#weer-provinciebe');
+                const belgium = document.querySelector('#weather-mapbe');
+
+                provincebeOptions.addEventListener('input', function() {
+                    let url = locatiesbe[provincebeOptions.value];
+                    console.log(url);
+                    belgium.src = url;
+                })
+
+                //nl aankomend//
+                const provinceaankOptions = document.querySelector('#weer-provincieaank');
+                const aank = document.querySelector('#weather-mapaank');
+
+                provinceaankOptions.addEventListener('input', function() {
+                    let url = locatiesaankomendnl[provinceaankOptions.value];
+                    console.log(url);
+                    aank.src = url;
+                })
+
+                //be aankomend//
+                const provinceaankbeOptions = document.querySelector('#weer-provincieaankbe');
+                const aankbe = document.querySelector('#weather-mapaankbe');
+
+                provinceaankbeOptions.addEventListener('input', function() {
+                    let url = locatiesaankomendbe[provinceaankbeOptions.value];
+                    console.log(url);
+                    aankbe.src = url;
+                })
+
+                console.log(jsonData); // <-- Dit is alle data die we hebben opgehaald
+                document.querySelector(".titel").innerHTML = jsonData.actual.stationmeasurements[2].weatherdescription; 
+                
+                var img = document.createElement("img");
+                img.src = jsonData.actual.stationmeasurements[2].iconurl // <-- Het weer icoon
+                var src = document.querySelector(".weer-icoontje")
+                src.appendChild(img)
+
+                // En de tempatuur
+                document.querySelector(".temperatuur").innerHTML = jsonData.actual.stationmeasurements[2].temperature + "graden";
+
+                //if(option=leeuwarden (vb)) zet plaatje =  <iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=53.20139&lng=5.80859&overname=2&zoom=8&naam=leeuwarden&size=2b&voor=1" scrolling=no width=330 height=330 frameborder=no></iframe>//
+                 
+            }).catch(function(err) {
+                console.log("Opps, Something went wrong!", err);
+            })
+            
+        
+        </script>
+        <body>
+        <nav> 
+            <ul>
+                <li><a href="hoofdpagina.html">Home</a></li>
+                <li><a href="nationaal.html">Nationaal</a></li>
+                <li><a class="active" href="regionaal.html">Regionaal</a></li>
+                <li><a href="internationaal.html">Internationaal</a></li>
+            </ul>
+        </nav>
+            <div class="regionaal">
+            <div class="radars">
+                <div class="NL"><img class="nl" src="Netherlands-flag-icon-on-transparent-background-PNG (1).png"><h1>Nederland</h1></div>
+                <h3 class="zoem">Buienradar kaart per provincie in <br> Nederland, <i>afgelopen</i> 3 uur.</h3> 
+                <select class="marginbtwh3" id="weer-provincie">
+                    <option disabled selected>Selecteer een provincie</option>
+                    <option value="beilen">Drenthe</option>
+                    <option value="lelystad">Flevoland</option>
+                    <option value="leeuwarden">Friesland</option>
+                    <option value="arnhem">Gelderland</option>
+                    <option value="groningen">Groningen</option>
+                    <option value="roermond">Limburg</option>
+                    <option value="tilburg">Noord-Brabant</option>
+                    <option value="alkmaar">Noord-Holland</option>
+                    <option value="hellendoorn">Overijssel</option>
+                    <option value="utrecht">Utrecht</option>
+                    <option value="goes">Zeeland</option>
+                    <option value="rotterdam">Zuid-Holland</option>
+                    </option>
+                </select>
+                <br>
+                <br>
+
+                <iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.09083&lng=5.12222&overname=2&zoom=8&naam=utrecht&size=2b&voor=0" id="weather-map" scrolling=no width=330 height=330 frameborder=no></iframe>
+            </div>
+
+            <div class="radars">
+                <div class="NL"><img class="nl" src="Netherlands-flag-icon-on-transparent-background-PNG (1).png"><h1>Nederland</h1></div>
+                <h3 class="zoem">Buienradar kaart per provincie in <br> Nederland, <i>aankomende</i> 3 uur.</h3> 
+                <select class="marginbtwh3" id="weer-provincieaank">
+                    <option disabled selected>Selecteer een provincie</option>
+                    <option value="beilenaank">Drenthe</option>
+                    <option value="lelystadaank">Flevoland</option>
+                    <option value="leeuwardenaank">Friesland</option>
+                    <option value="arnhemaank">Gelderland</option>
+                    <option value="groningenaank">Groningen</option>
+                    <option value="roermondaank">Limburg</option>
+                    <option value="tilburgaank">Noord-Brabant</option>
+                    <option value="alkmaaraank">Noord-Holland</option>
+                    <option value="hellendoornaank">Overijssel</option>
+                    <option value="utrechtaank">Utrecht</option>
+                    <option value="goesaank">Zeeland</option>
+                    <option value="rotterdamaank">Zuid-Holland</option>
+                    </option>
+                </select>
+                <br>
+                <br>
+
+                <iframe class="aank" src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.59667&lng=5.01667&overname=2&zoom=8&naam=schardam&size=2b&voor=1" id="weather-mapaank" scrolling=no width=330 height=330 frameborder=no></iframe>
+            </div>
+
+            <div class="radars">
+                <div class="BE"><img class="be" src="Belgium-flag-icon-on-transparent-background-PNG.png"><h1>België</h1></div>
+                <h3 class="zoem">Buienradar kaart per provincie in <br> België, <i>afgelopen</i> 3 uur.</h3> 
+                <select class="marginbtwh3" id="weer-provinciebe">
+                    <option disabled selected>Selecteer een provincie</option>
+                    <option value="malle">Antwerpen</option>
+                    <option value="frameries">Henegouwen</option>
+                    <option value="genk">Limburg</option>
+                    <option value="trooz">Luik</option>
+                    <option value="saint-hubert">Luxemburg</option>
+                    <option value="dinant">Namen</option>
+                    <option value="gent">Oost-Vlaanderen</option>
+                    <option value="rotselaar">Vlaams-Brabant</option>
+                    <option value="ottignies">Waals-Brabant</option>
+                    <option value="roeselare">West-Vlaanderen</option>
+                </select>
+                <br>
+                <br>
+                <iframe class="belgium" src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=51.29917&lng=4.7109&overname=2&zoom=8&naam=malle&size=2b&voor=0" id="weather-mapbe" scrolling=no width=330 height=330 frameborder=no></iframe>
+            </div>
+            <div class="radars">
+                <div class="BE"><img class="be" src="Belgium-flag-icon-on-transparent-background-PNG.png"><h1>België</h1></div>
+                    <h3 class="zoem">Buienradar kaart per provincie in <br> België, <i>aankomende</i> 3 uur.</h3> 
+                        <select class="marginbtwh3" id="weer-provincieaankbe">
+                            <option disabled selected>Selecteer een provincie</option>
+                            <option value="malleaank">Antwerpen</option>
+                            <option value="frameriesaank">Henegouwen</option>
+                            <option value="genkaank">Limburg</option>
+                            <option value="troozaank">Luik</option>
+                            <option value="saint-hubertaank">Luxemburg</option>
+                            <option value="dinantaank">Namen</option>
+                            <option value="gentaank">Oost-Vlaanderen</option>
+                            <option value="rotselaaraank">Vlaams-Brabant</option>
+                            <option value="ottigniesaank">Waals-Brabant</option>
+                            <option value="roeselareaank">West-Vlaanderen</option>
+                            </option>
+                        </select>
+                    <br>
+                    <br>
+                <iframe class="aankbe" src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=50.94653&lng=3.12269&overname=2&zoom=8&naam=roeselare&size=2b&voor=1" id="weather-mapaankbe" scrolling=no width=330 height=330 frameborder=no></iframe>
+            </div>
+            </div>
+        </body>
+        <footer>
+            <div class="allesflex"><i data-feather="instagram" style="color: white;"></i> &nbsp; <p>Authors: <a style="color: white;" href="https://www.instagram.com/babs_bzl/"> Babette Luinenburg </a>  & <a style="color: white;" href="https://www.instagram.com/charlotteabcouwer/"> Charlotte Abcouwer </a></p></div>
+            <div class="allesflex"><i data-feather="mail" style="color: white;"></i> &nbsp; <p><a style="color: white;" href="mailto:bzl.luinenburg@ziggo.nl">bzl.luinenburg@ziggo.nl</a> & <a style="color: white;" href="mailto:charleyabcouwer@hotmail.com">charleyabcouwer@hotmail.com</a></p></div>
+        </footer>
+        <script>
+            feather.replace();
+        </script>
+    </head>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <title> Een funcite in JavaScript </title>
+        <script type="text/javascript">
+            function berekening () {
+                var resultaat= parseFloat (document.mijnForm.getal1.value)
+                + parseFloat (document.mijnForm.getal2.value);
+                alert (resultaat);
+                }
+        </script>
+    </head>
+    <form name="mijnForm"> 
+        <input type="text" name="getal1" value="">
+        <br>
+        <br>
+        <input type="text" name="getal2" value="">
+        <br>
+        <br>
+        <input type="button" value="Bereken"
+        onclick="berekening()">
+    </form>
+</html>

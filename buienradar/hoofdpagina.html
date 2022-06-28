@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon"  href="druppiezonder.png">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" integrity="sha512-24XP4a9KVoIinPFUbcnjIjAjtS59PUoxQj3GNVpWc86bCqPuy3YxAcxJrxFCxXe4GHtAumCbO2Ze2bddtuxaRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <title> druppie | Home </title>
+        <script type="text/javascript">
+
+            fetch('https://data.buienradar.nl/2.0/feed/json')
+            .then(function(response) {
+                return response.json();
+            }).then(function(jsonData) {
+                const locationSelection     = document.querySelector('#weer-locatie');  
+                const weatherIcon           = document.querySelector('.weer-icoontje');
+                const weatherTitle          = document.querySelector('.titel');
+                const weatherRegio          = document.querySelector('.regio');
+                const weatherTemperature    = document.querySelector('.temperatuur');
+
+                // Hier gaan we de opgehaalde data verwerken!
+                console.log(jsonData);
+
+                for(var i = 0; i < jsonData.actual.stationmeasurements.length; i++) {
+                    let option = document.createElement('option');                              //Met document.createElement kunnen we een HTML element creeeren.
+                    option.innerText = "Regio " + jsonData.actual.stationmeasurements[i].regio;
+                    option.innerText += ", " + jsonData.actual.stationmeasurements[i].stationname;    
+                    option.value = i;                                                           //.value is een speciale waarde. Normaal bewerk je properties van een HTML element met .setAttribute en .getAttribute maar de waarde van HTML Form elementen kun je met .value ophalen en veranderen.
+
+                    locationSelection.appendChild(option);                                      //Met .appendChild kunnen we het option element toevoegen aan de locationSelection die we eerder in een variabel hebben opgeslagen.
+                }
+                
+                locationSelection.addEventListener('input', function() {
+                    //We slaan de index van het weerstation tijdelijk op in een variabel voor ons gemak. De value van het select element is nu de value geworden die aan een option element is toegewezen in de bovenstaande for-loop.
+                    let stationIndex = locationSelection.value;
+
+                    // Hier halen we de weeromschrijving van weerstation Berkhout op (weerstation 2)
+                    weatherTitle.innerHTML = jsonData.actual.stationmeasurements[stationIndex].weatherdescription; 
+                    weatherRegio.innerHTML = jsonData.actual.stationmeasurements[stationIndex].regio; 
+                    
+                    weatherIcon.innerHTML = '';                                             //Telkens als de gebruiker een nieuw weerstation selecteert willen we ervoorzorgen dat het bestaande weericoontje wordt verwijderd. Dit doen we door de innerHTML van het 'parent'-element te legen.
+                    var img = document.createElement("img");                                //Nieuw img-element aanmaken.
+                    img.src = jsonData.actual.stationmeasurements[stationIndex].iconurl;    //src van het nieuwe img-element aanpassen.
+                    weatherIcon.appendChild(img);                                           //het nieuwe plaatje toevoegen aan de pagina.
+
+                    // En de tempatuur
+                    weatherTemperature.innerHTML = jsonData.actual.stationmeasurements[stationIndex].temperature + " graden";
+                    
+                });
+
+                for(var i = 0; i <jsonData.forecast.fivedayforecast.length; i++) {
+                  // snelkoppeling //
+                    let currentDay = jsonData.forecast.fivedayforecast[i];
+                    let className = '.day-' + i;
+                    let day = new Date(currentDay.day);
+                    let mm = day.getMonth() + 1; // Months start at 0!
+                    let dd = day.getDate();
+
+                    if (dd < 10) dd = '0' + dd;
+                    if (mm < 10) mm = '0' + mm;
+
+
+
+                    document.querySelector(className + ' img').src = currentDay.iconurl;
+                    console.log(currentDay)
+                    document.querySelector(className + ' .weekdag').innerHTML = day.toLocaleDateString('nl-NL', { weekday: 'long' })
+                    document.querySelector(className + ' .date').innerHTML += dd + '-' + mm
+                    document.querySelector(className + ' .temperatuur').innerHTML += 'Het is minimaal ' + currentDay.mintemperatureMin + " °C";
+                    document.querySelector(className + ' .temperatuur').innerHTML += ' en maximaal '+ currentDay.maxtemperatureMax + " °C.";
+                    document.querySelector(className + ' .weatherdescription').innerHTML += currentDay.weatherdescription;
+                    document.querySelector(className + ' .sunchance').innerHTML +=  currentDay.sunChance + "%";
+                    document.querySelector(className + ' .rainchance').innerHTML += currentDay.rainChance + "%";
+                    document.querySelector(className + ' .windkracht').innerHTML += currentDay.wind + " Bft";
+                    document.querySelector(className + ' .windrichting').innerHTML += " De wind richting is " + currentDay.windDirection;
+                    document.querySelector(className + ' .mmRainmin').innerHTML += " Minimaal " + currentDay.mmRainMin +"mm";
+                    document.querySelector(className + ' .mmRainmax').innerHTML += " , maximaal " + currentDay.mmRainMax +"mm";
+                   
+                    
+                }
+                    
+
+                    document.querySelector(' .weatherdescriptionshortterm').innerHTML += jsonData.forecast.shortterm.forecast;
+                    document.querySelector(' .weatherdescriptionlongterm').innerHTML += jsonData.forecast.longterm.forecast;
+
+
+                 
+            }).catch(function(err) {
+                console.log("Opps, Something went wrong!", err);
+            })
+        </script>
+    </head>
+    <body>
+        <nav> 
+            <ul>
+                <li><a class="active" href="hoofdpagina.html">Home</a></li>
+                <li><a href="nationaal.html">Nationaal</a></li>
+                <li><a href="regionaal.html">Regionaal</a></li>
+                <li><a href="internationaal.html">Internationaal</a></li>
+              </ul>
+        </nav>
+    <div class="margin-top">
+        <div class="druppie">
+            <h1>Welkom bij www.druppie-online.nl</h1></div>
+        <div class="druppie"><p>Dé handige weerwebsite met radars, temperatuur, en vele andere voorspellingen!</p></div>
+    </div>
+        
+        
+        <div class="container">
+            <div class="classeman">
+                <div><h1> Wat is het weer nu, in <span class="regio">jouw regio?</span> </h1>
+                <select id="weer-locatie">
+                    <option disabled selected>Selecteer een locatie</option>    <!-- Standaard optie in het selectiemenu. Doordat de optie disabled bevat kan de gebruiker deze optie niet opnieuw kiezen zodra een andere optie is gekozen. -->
+                </select> 
+            <h3 class="titel"></h3>
+            <p class="weer-icoontje"></p>
+            <p class="temperatuur"></p> <br> </div>
+
+            
+            <div class="shortterm">
+                <h3> Het weer op kortte termijn, <i data-feather="map-pin"></i> De Bilt </h3>
+                <p class="weatherdescriptionshortterm"></p>
+            </div>
+
+            <div class="longterm">
+                <h3> Het weer op lange termijn, <i data-feather="map-pin"></i> De Bilt </h3>
+                <p class="weatherdescriptionlongterm"></p>
+            </div>
+
+            <img class="radarr" src="https://api.buienradar.nl/image/1.0/RadarMapNL?w=500&h=512">
+            </div>
+
+            <div class="blank"><h3> 5 daagse voorspelling, <i data-feather="map-pin"></i> De Bilt</h3></div>
+            <p class="voorspelling"></p>
+        <div class="fivedayforecast">
+            <div class="day day-0">
+                <b><p class="weekdag"></p></b> <p class="date"></p> 
+                <div class="flexie"> <img src="" alt=""> &nbsp; <p class="weatherdescription"></p> </div>
+                <div class="flexie"> <i data-feather="sun"></i> <p class="sunchance"></p> <i data-feather="cloud-drizzle"></i> <p class="rainchance"></p> <i data-feather="wind"></i> <p class="windkracht"></p> </div>
+                <div class="flexie"> <i data-feather="thermometer"></i> <p class="temperatuur"></p></div>
+                <div class="flexie2"> <i data-feather="droplet"></i> <p class="mmRainmin"></p><p class="mmRainmax"></p></div>
+                <div class="flexie"> <i data-feather="send"></i> <p class="windrichting"></p></div>
+                <p class="temperatuur" ></p>
+            </div>
+            <div class="day day-1">
+                <b><p class="weekdag"></p></b> <p class="date"></p>
+                <div class="flexie"> <img src="" alt=""> &nbsp; <p class="weatherdescription"></p> </div>
+                <div class="flexie"> <i data-feather="sun"></i> <p class="sunchance"></p> <i data-feather="cloud-drizzle"></i> <p class="rainchance"></p> <i data-feather="wind"></i> <p class="windkracht"></p> </div>
+                <div class="flexie"> <i data-feather="thermometer"></i> <p class="temperatuur"></p></div>
+                <div class="flexie2"> <i data-feather="droplet"></i> <p class="mmRainmin"></p><p class="mmRainmax"></p></div>
+                <div class="flexie"> <i data-feather="send"></i> <p class="windrichting"></p></div>
+                <p class="temperatuur"></p>
+            </div>
+            <div class="day day-2">
+                <b><p class="weekdag"></p></b> <p class="date"></p>  
+                <div class="flexie"> <img src="" alt=""> &nbsp; <p class="weatherdescription"></p> </div>
+                <div class="flexie"> <i data-feather="sun"></i> <p class="sunchance"></p> <i data-feather="cloud-drizzle"></i> <p class="rainchance"></p> <i data-feather="wind"></i> <p class="windkracht"></p> </div>
+                <div class="flexie"> <i data-feather="thermometer"></i> <p class="temperatuur"></p></div>
+                <div class="flexie2"> <i data-feather="droplet"></i> <p class="mmRainmin"></p><p class="mmRainmax"></p></div>
+                <div class="flexie"> <i data-feather="send"></i> <p class="windrichting"></p></div>
+                <p class="temperatuur"></p>
+            </div>
+            <div class="day day-3">
+                <b><p class="weekdag"></p></b> <p class="date"></p>
+                <div class="flexie"> <img src="" alt=""> &nbsp; <p class="weatherdescription"></p> </div>
+                <div class="flexie"> <i data-feather="sun"></i> <p class="sunchance"></p> <i data-feather="cloud-drizzle"></i> <p class="rainchance"></p> <i data-feather="wind"></i> <p class="windkracht"></p> </div>
+                <div class="flexie"> <i data-feather="thermometer"></i> <p class="temperatuur"></p></div>
+                <div class="flexie2"> <i data-feather="droplet"></i> <p class="mmRainmin"></p><p class="mmRainmax"></p></div>
+                <div class="flexie"> <i data-feather="send"></i> <p class="windrichting"></p></div>
+                <p class="temperatuur"></p>
+            </div>
+            <div class="day day-4">
+                <b><p class="weekdag"></p></b> <p class="date"></p> 
+                <div class="flexie"> <img src="" alt=""> &nbsp; <p class="weatherdescription"></p> </div>
+                <div class="flexie"> <i data-feather="sun"></i> <p class="sunchance"></p> <i data-feather="cloud-drizzle"></i> <p class="rainchance"></p> <i data-feather="wind"></i> <p class="windkracht"></p> </div>
+                <div class="flexie"> <i data-feather="thermometer"></i> <p class="temperatuur"></p></div>
+                <div class="flexie2"> <i data-feather="droplet"></i> <p class="mmRainmin"></p><p class="mmRainmax"></p></div>
+                <div class="flexie"> <i data-feather="send"></i> <p class="windrichting"></p></div>
+                <p class="temperatuur"></p>
+            </div>
+        </div>
+    </div>
+    </body>
+    <footer>
+        <div class="allesflex"><i data-feather="instagram" style="color: white;"></i> &nbsp; <p>Authors: <a style="color: white;" href="https://www.instagram.com/babs_bzl/"> Babette Luinenburg </a>  & <a style="color: white;" href="https://www.instagram.com/charlotteabcouwer/"> Charlotte Abcouwer </a></p></div>
+        <div class="allesflex"><i data-feather="mail" style="color: white;"></i> &nbsp; <p><a style="color: white;" href="mailto:bzl.luinenburg@ziggo.nl">bzl.luinenburg@ziggo.nl</a> & <a style="color: white;" href="mailto:charleyabcouwer@hotmail.com">charleyabcouwer@hotmail.com</a></p></div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</html>

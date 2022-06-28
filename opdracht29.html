@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <title> Een funcite in JavaScript </title>
+        <script type="text/javascript">
+            function berekening () {
+                var resultaat= (document.mijnForm.naam1.value) 
+                + (document.mijnForm.naam2.value)
+                + (document.mijnForm.naam3.value) ;
+                alert (resultaat);
+                }
+        </script>
+    </head>
+    <form name="mijnForm"> 
+        <input type="text" name="naam1" value="">
+        <br>
+        <br>
+        <input type="text" name="naam2" value="">
+        <br>
+        <br>
+        <input type="text" name="naam3" value="">
+        <br>
+        <br>
+        <input type="button" value="Voeg samen"
+        onclick="berekening()">
+    </form>
+</html>
